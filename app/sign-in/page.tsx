@@ -1,19 +1,15 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
 
-const SignUp = () => {
+
+const SignIn = ({initialUser} : any) => {
+
     return (
         <div className="h-screen relative bg-primary-light bg-opacity-70">
-            <div className="flex flex-col h-full w-full items-center justify-center">
-                <div className="bg-white px-24 my-6 shadow-xl py-6 flex flex-col  justify-center space-y-4">
-                    <div className="text-primary font-semibold text-3xl space-y-4 max-w-sm">Get one step closer</div>
-                    <div className="flex flex-col space-y-1">
-                        <label htmlFor="firstName" className="text-xs font-light">First name : </label>
-                        <input id="firstName" className="w-full rounded-md border text-sm text-gray-700 outline-none p-2 border-primary" placeholder="Place your first name please" />
-                    </div>
-                    <div className="flex flex-col space-y-1">
-                        <label htmlFor="lastName" className="text-xs font-light">Last name : </label>
-                        <input id="lastName" className="w-full rounded-md border text-sm text-gray-700 outline-none p-2 border-primary" placeholder="Place your last name please" />
-                    </div>
+            <div className="flex flex-col h-full w-full items-center ">
+                <div className="bg-white h-[400px] px-24 my-6 shadow-xl py-6 flex flex-col  justify-center space-y-4">
+                    <div className="text-primary font-semibold text-3xl space-y-4 max-w-sm">Welcome back</div>
                     <div className="flex flex-col space-y-1">
                         <label htmlFor="email" className="text-xs font-light">Email : </label>
                         <input id="email" type="email" className="w-full rounded-md border text-sm text-gray-700 outline-none p-2 border-primary" placeholder="Place your mail" />
@@ -22,13 +18,11 @@ const SignUp = () => {
                         <label htmlFor="password" className="text-xs font-light">Password : </label>
                         <input id="password" type="password" className="w-full rounded-md border text-sm text-gray-700 outline-none p-2 border-primary" placeholder="Place your password" />
                     </div>
-                    <div className="flex flex-col space-y-1">
-                        <label htmlFor="confirm_password" className="text-xs font-light">Confirm password : </label>
-                        <input id="confirm_password" type="password" className="w-full rounded-md border text-sm text-gray-700 outline-none p-2 border-primary" placeholder="Rewrite the password above" />
-                    </div>
+                    <div>Or</div>
+                    <button className="text-primary p-2 rounded-md border border-primary">Sign In with google</button>
                     <div className="space-y-2">
-                        <div className="text-xs font-light">Already have an account? <span className="text-primary text-base">Sign In</span></div>
-                        <button className="bg-primary py-2 px-4 text-base border text-white rounded-md">Sign Up</button>
+                        <div className="text-xs font-light">Don't have an account? <span className="text-primary text-base">Sign Up</span></div>
+                        <button className="bg-primary py-2 px-4 text-base border text-white rounded-md">Sign In</button>
                     </div>
                 </div>
             </div>
@@ -43,4 +37,4 @@ const SignUp = () => {
         </div>
     )
 }
-export default SignUp;
+export default SignIn;
