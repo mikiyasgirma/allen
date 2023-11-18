@@ -1,7 +1,9 @@
+"use client"
+
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
-
 
 const SignIn = ({initialUser} : any) => {
 
@@ -19,7 +21,7 @@ const SignIn = ({initialUser} : any) => {
                         <input id="password" type="password" className="w-full rounded-md border text-sm text-gray-700 outline-none p-2 border-primary" placeholder="Place your password" />
                     </div>
                     <div>Or</div>
-                    <button className="text-primary p-2 rounded-md border border-primary">Sign In with google</button>
+                    <button onClick={()=>signIn('google', {callbackUrl: '/'})} className="text-primary p-2 rounded-md border border-primary">Sign In with google</button>
                     <div className="space-y-2">
                         <div className="text-xs font-light">Don't have an account? <span className="text-primary text-base">Sign Up</span></div>
                         <button className="bg-primary py-2 px-4 text-base border text-white rounded-md">Sign In</button>
