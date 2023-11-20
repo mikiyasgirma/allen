@@ -1,4 +1,4 @@
-const CourseDetail = () => {
+const JobDetail = () => {
     return (
         <div className="min-h-screen px-12">
             <div className="bg-primary-light rounded-md py-8 px-6 w-full">
@@ -49,4 +49,4 @@ const CourseDetail = () => {
         </div>
     )
 }
-export default CourseDetail;
+export default JobDetail;
