@@ -1,6 +1,6 @@
 import { CiSearch } from "react-icons/ci";
-import TutorialsCard from "../components/tutorialsCard";
 import { MdFilterList } from "react-icons/md";
+import CourseCard from "../components/course-card";
 
 const Courses = () => {
     return (
@@ -25,9 +25,9 @@ const Courses = () => {
                 </div>
                 <div className="basis-5/6">
                     <div className="text-lg font-semibold py-4">Top tutorials</div>
-                    <TutorialsCard />
-                    <TutorialsCard />
-                    <TutorialsCard />
+                    <CourseCard id="1" title="" description="" thumbnail="" video="" />
+                    <CourseCard id="1" title="" description="" thumbnail="" video="" />
+                    <CourseCard id="1" title="" description="" thumbnail="" video="" />
                 </div>
             </div>
         </div>
