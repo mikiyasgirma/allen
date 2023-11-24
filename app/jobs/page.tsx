@@ -1,6 +1,6 @@
 "use client"
 import { CiSearch } from "react-icons/ci";
-import TutorialsCard from "../components/course-card";
+import CourseCard from "../components/course-card";
 import { useEffect, useState } from "react";
 import { QuerySnapshot, collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
@@ -30,6 +30,7 @@ const Jobs = () => {
     const {jobs, addJob, dataFetched, setDataFetched} = useJobStore();
     const {courses, addCourse, courseDataFetched, setCourseDataFetched} =  useCourseStore();
     console.log("data fetched", dataFetched)
+    console.log("courses", courses);
     
     useEffect(() => {
         // Fetch data only if it hasn't been fetched yet
@@ -95,7 +96,7 @@ const Jobs = () => {
                 <div className="">
                     {
                         courses?.map((course)=>(
-                            <TutorialsCard thumbnail={course.thumbnail} title={course.title} description={course.description} video={course.video} id={course.id} />
+                            <CourseCard thumbnail={course.thumbnail} title={course.title} description={course.description} video={course.video} id={course.id} />
                         ))
                     }
                 </div>

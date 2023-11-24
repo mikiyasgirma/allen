@@ -1,8 +1,18 @@
+"use client"
+
 import { CiSearch } from "react-icons/ci";
 import { MdFilterList } from "react-icons/md";
 import CourseCard from "../components/course-card";
+import useCourseStore from "../store/useCourseStore";
+import useJobStore from "../store/useJobStore";
 
 const Courses = () => {
+
+    const {courses, addCourse, courseDataFetched, setCourseDataFetched} =  useCourseStore();
+    const { jobs } = useJobStore();
+    console.log("courses from detail", courses)
+    console.log("jobs from detail", jobs)
+
     return (
         <div className="min-h-screen px-12">
             <div className="flex items-center justify-center py-2">
