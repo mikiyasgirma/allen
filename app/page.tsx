@@ -10,7 +10,7 @@ export default function Home() {
           <div className='absolute bg-white h-[450px] w-[900px] left-60 bottom-16 shadow-[10px_10px_0px_0px_rgba(64,78,79)] '>
             <div className='p-12 space-y-4'>
               <div className='text-primary text-7xl font-bold tracking-wider leading-tight max-w-2xl'>Do you want to get your dream job?</div>
-              <button onClick={()=>signOut()} className='bg-primary text-white py-2 px-6'>Logout</button>
+              <button onClick={()=>signOut()} className='bg-primary text-white py-2 px-6'>Register</button>
               <div className='py-4 text-xs'>Already have an account? <span className='text-primary'>click here to login</span></div>
             </div>
           </div>

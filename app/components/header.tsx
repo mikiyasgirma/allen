@@ -54,7 +54,7 @@ const Header: React.FC = () => {
                         </div>
                     ) : (
                         <div className='space-x-3'>
-                            <button className="bg-primary text-white px-6 py-1 rounded-md">Join Us</button>
+                            <button className="bg-primary text-white px-6 py-1 rounded-md">Register</button>
                             <button onClick={()=>signIn('google', {callbackUrl: '/'})} className="text-primary px-6 py-1 rounded-md border-primary border-2">Sign In</button>
                         </div>
                     )
