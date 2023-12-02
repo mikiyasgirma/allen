@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ICourses } from "../courses/page"
 
 const CourseCard = ({thumbnail, title, description, video, id} : any) => {
     
