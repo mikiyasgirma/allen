@@ -1,8 +1,8 @@
 import Image from "next/image"
-import { ICourses } from "../jobs/page"
 import Link from "next/link"
+import { ICourses } from "../courses/page"
 
-const CourseCard = ({thumbnail, title, description, video, id} : ICourses) => {
+const CourseCard = ({thumbnail, title, description, video, id} : any) => {
     
     return (
         <div className="flex space-x-4 items-center mt-2">
