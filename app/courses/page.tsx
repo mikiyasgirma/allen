@@ -3,15 +3,36 @@
 import { CiSearch } from "react-icons/ci";
 import { MdFilterList } from "react-icons/md";
 import CourseCard from "../components/course-card";
-import useCourseStore from "../store/useCourseStore";
+import useCourseStore, { Course } from "../store/useCourseStore";
 import useJobStore from "../store/useJobStore";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+  
+  export interface ICourses {
+    id: string;
+    title: string;
+    description: string;
+    thumbnail: string;
+    video: string;
+  }
 
 const Courses = () => {
 
-    const {courses, addCourse, courseDataFetched, setCourseDataFetched} =  useCourseStore();
-    const { jobs } = useJobStore();
-    console.log("courses from detail", courses)
-    console.log("jobs from detail", jobs)
+    const [courses, setCourses] = useState<ICourses[]>();
+    const coursesDbInstance = collection(db, 'courses')
+    const getCourses = () => {
+        getDocs(coursesDbInstance)
+            .then((data) => {
+                setCourses(data.docs.map((item) => {
+                    return { ...item.data(), id: item.id } as Course
+                }));
+            })
+      }
+    
+      useEffect(() => {
+        getCourses();
+      }, [])
 
     return (
         <div className="min-h-screen px-12">
@@ -35,9 +56,13 @@ const Courses = () => {
                 </div>
                 <div className="basis-5/6">
                     <div className="text-lg font-semibold py-4">Top tutorials</div>
-                    <CourseCard id="OBJGBkVbLGOMlAof55jQ" title="" description="" thumbnail="" video="" />
-                    <CourseCard id="1" title="" description="" thumbnail="" video="" />
-                    <CourseCard id="1" title="" description="" thumbnail="" video="" />
+                    <div className="flex flex-col space-y-4">
+                        {
+                            courses?.map((course)=>(
+                                <CourseCard key={course.id} id={course.id} title={course.title} description={course.description} thumbnail={course.thumbnail} video={course.video} />
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
         </div>
