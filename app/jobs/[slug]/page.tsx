@@ -1,11 +1,29 @@
 "use client"
-import useJobStore from "@/app/store/useJobStore"
+import { db } from "@/app/firebase";
+import useJobStore, { Job } from "@/app/store/useJobStore"
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { IJobs } from "../page";
 
 export default function Page({ params }: { params: { slug: string } }) {
-    const {jobs} = useJobStore()
 
-    const job = jobs.find((item) => item.id === params.slug)
-    console.log("job", job);
+    const [job, setJob] = useState<IJobs>()
+
+    const getDocument = async () =>{
+        const docRef = doc(db, "jobs", params.slug);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()){
+            setJob(docSnap.data() as Job);
+        } else {
+            console.log("no such document")
+        }
+    }
+
+    useEffect(()=>{
+        getDocument();
+    },[])
+
     
     return (
         <div className="min-h-screen px-12">
@@ -21,7 +39,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 <div className="text-xs max-w-xl">{job?.description}</div>
                 <div className="flex space-x-2 py-2">
                 {
-                    job?.skills_required.map((key, index) => (
+                    job?.skills_required.map((key : string, index : number) => (
                             <div key={index} className="px-4 py-1 text-xs rounded-2xl bg-[#9CAE29] text-white">{key}</div>
                             ))
                         }

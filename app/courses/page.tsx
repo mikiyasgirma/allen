@@ -35,7 +35,7 @@ const Courses = () => {
                 </div>
                 <div className="basis-5/6">
                     <div className="text-lg font-semibold py-4">Top tutorials</div>
-                    <CourseCard id="1" title="" description="" thumbnail="" video="" />
+                    <CourseCard id="OBJGBkVbLGOMlAof55jQ" title="" description="" thumbnail="" video="" />
                     <CourseCard id="1" title="" description="" thumbnail="" video="" />
                     <CourseCard id="1" title="" description="" thumbnail="" video="" />
                 </div>

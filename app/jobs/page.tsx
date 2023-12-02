@@ -2,11 +2,12 @@
 import { CiSearch } from "react-icons/ci";
 import CourseCard from "../components/course-card";
 import { useEffect, useState } from "react";
-import { QuerySnapshot, collection, doc, onSnapshot, query } from "firebase/firestore";
+import { QuerySnapshot, collection, collectionGroup, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
 import JobCard from "../components/job-card";
 import useJobStore, { Job } from "../store/useJobStore";
 import useCourseStore, { Course } from "../store/useCourseStore";
+import  { fetchJobData } from "../utilities/firestore";
 
 export interface IJobs {
     id: string;
@@ -25,54 +26,79 @@ export interface ICourses {
 }
 
 const Jobs = () => {
-    // const [jobs, setJobs] = useState<IJobs[]>([]);
-    // const [courses, setCourses] = useState<ICourses[]>();
-    const {jobs, addJob, dataFetched, setDataFetched} = useJobStore();
-    const {courses, addCourse, courseDataFetched, setCourseDataFetched} =  useCourseStore();
-    console.log("data fetched", dataFetched)
-    console.log("courses", courses);
-    
-    useEffect(() => {
-        // Fetch data only if it hasn't been fetched yet
-        if (!dataFetched) {
-          const fetchJobs = async () => {
-            const q = query(collection(db, 'jobs'));
-            const unSubscribe = onSnapshot(q, (querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                const jobData = { id: doc.id, ...doc.data() } as Job;
-                addJob(jobData);
-              });
-            });
-    
-            setDataFetched(true); // Set dataFetched to true after fetching data
-    
-            return () => unSubscribe(); // Cleanup function to unsubscribe from the snapshot listener
-          };
-    
-          fetchJobs();
-        }
-      }, [dataFetched, setDataFetched]);
+    const [jobs, setJobs] = useState<IJobs[]>();
+    const [courses, setCourses] = useState<ICourses[]>();
 
-      useEffect(() => {
-        // Fetch data only if it hasn't been fetched yet
-        if (!courseDataFetched) {
-          const fetchCourses = async () => {
-            const q = query(collection(db, 'courses'));
-            const unSubscribe = onSnapshot(q, (querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                const courseData = { id: doc.id, ...doc.data() } as Course;
-                addCourse(courseData);
-              });
-            });
+    const jobsDbInstance = collection(db, 'jobs');
+    const coursesDbInstance = collection(db, 'courses')
+
+    const getJobs = () => {
+           getDocs(jobsDbInstance)
+               .then((data) => {
+                   setJobs(data.docs.map((item) => {
+                       return { ...item.data(), id: item.id } as Job
+                   }));
+               })
+       }
+
+    useEffect(() => {
+      getJobs();
+    }, [])
     
-            setDataFetched(true); // Set dataFetched to true after fetching data
+    const getCourses = () => {
+      getDocs(coursesDbInstance)
+          .then((data) => {
+              setCourses(data.docs.map((item) => {
+                  return { ...item.data(), id: item.id } as Course
+              }));
+          })
+    }
+
+    useEffect(() => {
+      getCourses();
+    }, [])
     
-            return () => unSubscribe(); // Cleanup function to unsubscribe from the snapshot listener
-          };
+    // useEffect(() => {
+    //     // Fetch data only if it hasn't been fetched yet
+    //     if (!dataFetched) {
+    //       const fetchJobs = async () => {
+    //         const q = query(collection(db, 'jobs'));
+    //         const unSubscribe = onSnapshot(q, (querySnapshot) => {
+    //           querySnapshot.forEach((doc) => {
+    //             const jobData = { id: doc.id, ...doc.data() } as Job;
+    //             addJob(jobData);
+    //           });
+    //         });
     
-          fetchCourses();
-        }
-      }, [dataFetched, setDataFetched]);
+    //         setDataFetched(true); // Set dataFetched to true after fetching data
+    
+    //         return () => unSubscribe(); // Cleanup function to unsubscribe from the snapshot listener
+    //       };
+    
+    //       fetchJobs();
+    //     }
+    //   }, [dataFetched, setDataFetched]);
+
+    //   useEffect(() => {
+    //     // Fetch data only if it hasn't been fetched yet
+    //     if (!courseDataFetched) {
+    //       const fetchCourses = async () => {
+    //         const q = query(collection(db, 'courses'));
+    //         const unSubscribe = onSnapshot(q, (querySnapshot) => {
+    //           querySnapshot.forEach((doc) => {
+    //             const courseData = { id: doc.id, ...doc.data() } as Course;
+    //             addCourse(courseData);
+    //           });
+    //         });
+    
+    //         setDataFetched(true); // Set dataFetched to true after fetching data
+    
+    //         return () => unSubscribe(); // Cleanup function to unsubscribe from the snapshot listener
+    //       };
+    
+    //       fetchCourses();
+    //     }
+    //   }, [dataFetched, setDataFetched]);
 
     return (
         <div className="min-h-screen px-12">
@@ -86,7 +112,7 @@ const Jobs = () => {
             <div className="space-y-3">
                 <div className="text-xl py-2">Latest Jobs</div>
                 {
-                    jobs.map((job)=> (
+                    jobs?.map((job:any)=> (
                         <JobCard id={job.id} title={job.title} description={job.description} recruiter={job.recruiter} skills_required={job.skills_required} />
                     ))
                 }
@@ -97,7 +123,7 @@ const Jobs = () => {
                     {
                         courses?.map((course)=>(
                             <CourseCard thumbnail={course.thumbnail} title={course.title} description={course.description} video={course.video} id={course.id} />
-                        ))
+                            ))
                     }
                 </div>
             </div>
