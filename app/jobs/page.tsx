@@ -16,7 +16,14 @@ export interface IJobs {
     description: string;
     recruiter: string;
     skills_required: string[];
-  }
+}
+export interface ICourses {
+    id: string;
+    title: string;
+    description: string;
+    video: string;
+    thumbnail: string;
+}
   
 const Jobs = () => {
 
